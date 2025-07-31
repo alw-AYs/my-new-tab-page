@@ -44,7 +44,7 @@
             <div class="fav-list">
                 <div v-for="(item) in getPaginatedItems()" class="fav" :class="favAnimation" :key="'fav'+item.id" @click="clickFav(item.id)">
                     <div class="icon">
-                        <img v-if="item.url" class="ic" :src="item.url | besticon" />
+                        <img v-if="item.url" class="ic" :src="getBestIcon(item.url)" />
                         <div v-else class="iconfont icon-folder engrave"></div>
                     </div>
                     <div class="name engrave">{{item.title}}</div>
@@ -91,22 +91,7 @@ export default {
             paginationAnimation:''
         }
     },
-    filters: {
-        besticon: function(url) {
-            if (url) {
-                console.log(url)
-                let t = url.match(/^http(s)?:\/\/(.*?)\//);
-                if(t && t[0]){
-                url = t[0];
-                return `https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${url}&size=256`;
-                }else{
-                    return false;
-                }
-            } else {
-                return false;
-            }
-        }
-    },
+
     watch: {
         "routerStand": {
             handler: function(value) {
@@ -171,6 +156,20 @@ export default {
 
     },
     methods: {
+        getBestIcon: function(url) {
+            if (url) {
+                console.log(url)
+                let t = url.match(/^http(s)?:\/\/(.*?)\//);
+                if(t && t[0]){
+                    url = t[0];
+                    return `https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${url}&size=256`;
+                }else{
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        },
         getPaginatedItems: function() {
             let t = this.router[this.router.length - 1];
             let offset = (t.page - 1) * pageSize;
@@ -187,7 +186,7 @@ export default {
                 t.childrenTotal = activeList.children.length;
                 t.title = activeList.title;
                 t.parentId = activeList.parentId;
-                this.$set(this.router, this.router.length - 1, t);
+                this.router[this.router.length - 1] = t;
             }
             return activeList;
         },
@@ -295,7 +294,7 @@ export default {
             if (t.page != id) {
                 t.page = id;
             }
-            this.$set(this.routerStand, this.routerStand.length - 1, t);
+            this.routerStand[this.routerStand.length - 1] = t;
         },
         clickBack: function() {
             this.routerStand.pop()

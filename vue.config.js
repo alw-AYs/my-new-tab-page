@@ -1,4 +1,6 @@
-module.exports = {
+const { defineConfig } = require('@vue/cli-service')
+
+module.exports = defineConfig({
     pages: {
         override: {
             template: 'public/browser-extension.html',
@@ -12,7 +14,7 @@ module.exports = {
                 implementation: require('sass'), // This line must in sass option
             },
             scss: {
-                prependData: `@import "~@/css/variables.scss";`
+                additionalData: `@import "~@/css/variables.scss";`
             }
         }
     },
@@ -32,4 +34,4 @@ module.exports = {
             }
         }
     }
-}
+})
