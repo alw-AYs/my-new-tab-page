@@ -3,7 +3,7 @@ console.log('Content script loaded');
 
 // 与 background script 通信
 function sendMessageToBackground(type, data = {}) {
-  return browser.runtime.sendMessage({
+  return chrome.runtime.sendMessage({
     type,
     ...data
   });
@@ -25,7 +25,7 @@ function setStorage(data) {
 }
 
 // 监听来自 background script 的消息
-browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   console.log('Content script received message:', request);
   
   // 处理消息
