@@ -1,0 +1,168 @@
+/*
+media-under
+media-over
+media-between
+media-only
+*/
+
+$breakpoints: (
+  'phone': ('upper': 767px), 
+  'tablet': ('lower': 768px, 'upper': 991px), 
+  'labtop': ('lower': 992px, 'upper': 1200px), 
+  'desk': ('lower': 1201px)
+  ) !default;
+
+// Media query enabled up to the upper bound of the breakpoint.
+@mixin media-under($key) {
+    $upper: upper-breakpoint($key, $breakpoints);
+
+    @if $upper {
+        @media (max-width: $upper) {
+            @content;
+        }
+    }
+
+    @else {
+        @content;
+    }
+}
+
+// Media query enabled over the lower bound of the breakpoint.
+@mixin media-over($key) {
+    $lower: lower-breakpoint($key, $breakpoints);
+
+    @if $lower {
+        @media (min-width: $lower) {
+            @content;
+        }
+    }
+
+    @else {
+        @content;
+    }
+}
+
+// Media query enabled between the lower bound of the lower breakpoint and the
+// upper bound of the upper breakpoint.
+@mixin media-between($lower-key, $upper-key) {
+    $lower: lower-breakpoint($lower-key, $breakpoints);
+    $upper: upper-breakpoint($upper-key, $breakpoints);
+
+    @if $lower and $upper {
+        @media (min-width: $lower) and (max-width: $upper) {
+            @content;
+        }
+    }
+
+    @else if $lower {
+        @include media-over($lower-key) {
+            @content;
+        }
+    }
+
+    @else if $upper {
+        @include media-under($upper-key) {
+            @content;
+        }
+    }
+
+    @else {
+        @content;
+    }
+}
+
+// Media query enabled between the bounds of a single breakpoint.
+@mixin media-only($key) {
+    @include media-between($key, $key) {
+        @content;
+    }
+}
+
+// Converts a map of lower breakpoints to a breakpoints map usable by other
+// mixins.
+// Converts from ('small': none, 'large': 800px) to:
+// (
+//   'small': ('lower': none, 'upper': 800px),
+//   'large': ('lower': 800px, 'upper': none)
+// )
+@function create-breakpoints($lower-breakpoints) {
+    $length: length($lower-breakpoints);
+    $values: map-values($lower-breakpoints);
+    // The last breakpoint is handled first, as it is a special case.
+    $last-key: nth(nth($lower-breakpoints, $length), 1);
+    $last: nth($values, length($values));
+    $result: ($last-key: ('lower': $last,
+        'upper': null));
+
+    // The loop does not iterate over the last breakpoint.
+    @for $index from $length - 1 through 1 {
+        $current-key: nth(nth($lower-breakpoints, $index), 1);
+        $current: nth($values, $index);
+        $next: nth($values, $index + 1);
+        $result: map-merge(($current-key: ('lower': $current,
+            'upper': $next)),
+            $result);
+    }
+
+    @return $result;
+}
+
+@function lower-breakpoint($key, $breakpoints) {
+    $exists: key-exists($key, $breakpoints);
+    $breakpoint: map-get($breakpoints, $key);
+    $valid: breakpoint-bounds($breakpoint);
+
+    @if (map-has-key($breakpoint, 'lower')) {
+        @return map-get($breakpoint, 'lower');
+    }
+
+    @return null;
+}
+
+@function upper-breakpoint($key, $breakpoints) {
+    $exists: key-exists($key, $breakpoints);
+    $breakpoint: map-get($breakpoints, $key);
+    $valid: breakpoint-bounds($breakpoint);
+
+    @if (map-has-key($breakpoint, 'upper')) {
+        @return map-get($breakpoint, 'upper');
+    }
+
+    @return null;
+}
+
+
+@function key-exists($key, $breakpoints) {
+    @if (not map-has-key($breakpoints, $key)) {
+        @error "Breakpoint #{$key} does not exist.";
+    }
+
+    @return true;
+}
+
+@function breakpoint-bounds($breakpoint) {
+    @if (not(type-of($breakpoint)=='map')) {
+        @error "Breakpoint must be a map.";
+    }
+
+    @else if ((not map-has-key($breakpoint, 'lower')) and (not map-has-key($breakpoint, 'upper'))) {
+        @error "Breakpoint must have lower, upper or both properties.";
+    }
+
+    @return true;
+}
+
+@mixin content() {
+    $content: content-exists();
+
+    @if (not $content) {
+        @error "Content block is required. Pass the mixin a content block.";
+
+        // The @content needs to be used for the mixin to require it. A @content
+        // block must be placed inside a selector, so without a selector Sass
+        // complains.
+        .error {
+            @content;
+        }
+    }
+}

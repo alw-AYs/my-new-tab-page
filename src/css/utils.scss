@@ -1,0 +1,44 @@
+@use "sass:math";
+$window-width: 750 !default;
+$window-height: 2436 !default;
+
+@function size($w, $d: $window-width) {
+    @return math.div($w, $d)*100vw;
+}
+
+@function sizeH($h, $d: $window-height) {
+    @return math.div($h, $d)*100vh;
+}
+
+@function sizeP($w, $d: $window-width) {
+    @return math.div($w, $d)*100%;
+}
+
+@function mathDiv($a, $b) {
+    @return math.div($a, $b);
+}
+
+
+
+@mixin fontface($name, $file, $weight: normal, $style: normal) {
+    @font-face {
+        font-family: "#{$name}";
+        src: url('assets/fonts/#{$file}.woff2') format("woff2"),
+        url('assets/fonts/#{$file}.woff') format("woff"),
+        url('assets/fonts/#{$file}.ttf') format("truetype");
+        font-weight: $weight;
+        font-style: $style;
+    }
+}
+
+@mixin coverBG {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+@mixin containBG {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}

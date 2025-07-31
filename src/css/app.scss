@@ -1,0 +1,118 @@
+@font-face {
+    font-family: "iconfont";
+    /* Project id  */
+    src: url('../assets/fonts/iconfont.ttf?t=1638958442349') format('truetype');
+}
+
+.iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-loading:before {
+    content: "\e615";
+}
+
+.icon-fav:before {
+    content: "\e616";
+}
+
+.icon-reload:before {
+    content: "\e617";
+}
+.icon-folder:before {
+    content: "\e618";
+}
+.icon-double-arrow-up:before {
+  content: "\e619";
+}
+
+.icon-arrow-up:before {
+  content: "\e61a";
+}
+
+
+// @font-face {
+//     font-family: 'Porsche Next W La';
+//     font-weight: 400;
+//     font-style: normal;
+
+//     src: url('assets/fonts/PorscheNextWLa-Regular.eot');
+//     src: url('assets/fonts/PorscheNextWLa-Regular.woff') format('woff'),
+//         url('assets/fonts/PorscheNextWLa-Regular.ttf') format('truetype'),
+//         url('assets/fonts/PorscheNextWLa-Regular.eot?#iefix') format('embedded-opentype');
+// }
+
+// @font-face {
+//     font-family: 'Porsche Next W La';
+//     font-weight: 700;
+//     font-style: normal;
+
+//     src: url('assets/fonts/PorscheNextWLa-Bold.eot');
+//     src: url('assets/fonts/PorscheNextWLa-Bold.woff') format('woff'),
+//         url('assets/fonts/PorscheNextWLa-Bold.ttf') format('truetype'),
+//         url('assets/fonts/PorscheNextWLa-Bold.eot?#iefix') format('embedded-opentype');
+// }
+
+// @font-face {
+//     font-family: 'simhei';
+//     font-weight: 400;
+//     font-style: normal;
+
+//     src: url('assets/fonts/simhei_0.eot');
+//     src: url('assets/fonts/simhei_0.woff') format('woff'),
+//         url('assets/fonts/simhei_0.ttf') format('truetype'),
+//         url('assets/fonts/simhei_0.eot?#iefix') format('embedded-opentype');
+// }
+
+*,
+::after,
+::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: "PingFang SC", "Helvetica Neue", Helvetica, "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    font-size: 62.5%;
+
+    @include media-under('small') {
+        font-size: size(10);
+    }
+
+    line-height: 1;
+    user-select: none;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    background-color: $color-theme;
+}
+
+ul,
+li {
+    list-style: none;
+}
+
+img,
+svg {
+    line-height: 0;
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+}
+
+a {
+    text-decoration: none;
+}

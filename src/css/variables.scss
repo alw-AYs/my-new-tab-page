@@ -1,0 +1,34 @@
+@import 'breakpoints', 'utils';
+
+$breakpoints: ('tiny': ('upper': 480px),
+'xsmall':('lower':481px, 'upper':600px),
+'small':('lower':601px, 'upper':740px),
+'medium':('lower':741px, 'upper':996px),
+'large':('lower':997px, 'upper':1200px),
+'xlarge':('lower':1201px, 'upper':1424px),
+'huge':('lower':1425px, 'upper':1584px));
+
+$window-width: 750;
+$window-height: 1324;
+
+
+$white:#fff;
+$grey-1: #e0e5ec;
+$grey-2: #c3c1c6;
+$grey-3: #b1b1b1;
+$grey-5: #9baacf;
+$primary:#6667ab;
+
+$color-theme: #EBECF0;
+$color-light-shadow: $white;
+$color-dark-shadow: fade_out($grey-2, 0.1);
+$shadow-depth: 3px;
+$tool-button-size:30px;
+
+
+
+$fav-font-size: 12px;
+$fav-line-height: 1.2;
+$fav-lines-to-show: 2;
+
+$duation:.5s;
