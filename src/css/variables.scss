@@ -1,4 +1,7 @@
-@import 'breakpoints', 'utils';
+@use 'breakpoints' as *;
+@use 'utils' as *;
+@forward 'breakpoints';
+@forward 'utils';
 
 $breakpoints: ('tiny': ('upper': 480px),
 'xsmall':('lower':481px, 'upper':600px),
@@ -21,7 +24,7 @@ $primary:#6667ab;
 
 $color-theme: #EBECF0;
 $color-light-shadow: $white;
-$color-dark-shadow: fade_out($grey-2, 0.1);
+$color-dark-shadow: rgba(195, 193, 198, 0.9);
 $shadow-depth: 3px;
 $tool-button-size:30px;
 

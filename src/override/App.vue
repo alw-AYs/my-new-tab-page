@@ -264,6 +264,7 @@ export default {
         clickFav: function(id) {
             let activeList = this.getFavActiveList();
             let item = find(activeList.children, (v) => { return v.id == id });
+
             if (item.url) {
                 window.location.href = item.url;
             } else if (item.children.length > 0) {
@@ -293,11 +294,13 @@ export default {
             let t = this.routerStand[this.routerStand.length - 1];
             if (t.page != id) {
                 t.page = id;
+                let newRouterStand = [...this.routerStand];
+                newRouterStand[newRouterStand.length - 1] = t;
+                this.routerStand = newRouterStand;
             }
-            this.routerStand[this.routerStand.length - 1] = t;
         },
         clickBack: function() {
-            this.routerStand.pop()
+            this.routerStand = this.routerStand.slice(0, -1);
         },
         relaunch: function(type) {
             let o = { type: type, page: 1 };
@@ -308,12 +311,13 @@ export default {
         to: function(id) {
             let t = this.routerStand[this.routerStand.length - 1];
             let o = { type: t.type, page: 1, folderID: id };
-            this.routerStand.push(o);
+            this.routerStand = [...this.routerStand, o];
         }
     }
 }
 </script>
 <style lang="scss">
+@import '@/css/variables.scss';
 @import '@/css/app.scss';
 @import url("https://use.typekit.net/rej2uzt.css");
 
@@ -492,7 +496,7 @@ export default {
             transition: all .5s ease-in-out;
             transform: translate(0, 100%);
             border-top-right-radius: 8px;
-            box-shadow: 3rem 3rem 5rem fade_out(#333, 0.2);
+            box-shadow: 3rem 3rem 5rem rgba(51, 51, 51, 0.8);
 
 
             .pointer {
@@ -568,7 +572,7 @@ export default {
         transform: translate(-50%, -50%);
         background-color: $color-theme;
         border-radius: 8px;
-        box-shadow: 3rem 3rem 5rem fade_out(#333, 0.2);
+        box-shadow: 3rem 3rem 5rem rgba(51, 51, 51, 0.8);
         opacity: 0;
         pointer-events: none;
         transition: all 260ms ease-in-out;
@@ -593,7 +597,7 @@ export default {
         .title-container {
             display: flex;
             opacity: 0;
-            transition: all $duation/2 ease-out;
+            transition: all mathDiv($duation, 2) ease-out;
 
             &.out {
 
@@ -673,11 +677,11 @@ export default {
 
                     &.animating {
                         pointer-events: none;
-                        transition: all $duation/2 ease-out, box-shadow $duation/2 ease-out;
+                        transition: all mathDiv($duation, 2) ease-out, box-shadow mathDiv($duation, 2) ease-out;
 
                         .icon,
                         .name {
-                            transition: all $duation/4 ease;
+                            transition: all mathDiv($duation, 4) ease;
                         }
                     }
                 }
@@ -695,11 +699,11 @@ export default {
 
                     &.animating {
                         pointer-events: none;
-                        transition: all $duation ease-out, box-shadow $duation/2 $duation/2 ease-out;
+                        transition: all $duation ease-out, box-shadow mathDiv($duation, 2) mathDiv($duation, 2) ease-out;
 
                         .icon,
                         .name {
-                            transition: all $duation/2 $duation/2 ease;
+                            transition: all mathDiv($duation, 2) mathDiv($duation, 2) ease;
                         }
                     }
                 }

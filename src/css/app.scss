@@ -1,3 +1,8 @@
+@use 'breakpoints' as *;
+@use 'utils' as *;
+@forward 'breakpoints';
+@forward 'utils';
+
 @font-face {
     font-family: "iconfont";
     /* Project id  */
@@ -79,14 +84,13 @@
 html {
     font-family: "PingFang SC", "Helvetica Neue", Helvetica, "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
     font-size: 62.5%;
+    line-height: 1;
+    user-select: none;
+    box-sizing: border-box;
 
     @include media-under('small') {
         font-size: size(10);
     }
-
-    line-height: 1;
-    user-select: none;
-    box-sizing: border-box;
 }
 
 html,
